@@ -1,0 +1,43 @@
+<html>
+<head>
+<script>
+var oldCount = 1;
+var p=0;
+function getCount()
+    {
+		alert("incount");
+      xmlhttp = new XMLHttpRequest();
+      xmlhttp.open("GET","second1.php",false);
+	  xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                p = xmlhttp.responseText;
+				document.write("The number of files in this folder is: " + p);
+			}
+        }
+		xmlhttp.send();
+    }
+function myTimer()
+{
+alert("in data");
+getCount();
+alert(p);
+xmlhttp1 = new XMLHttpRequest();
+xmlhttp1.open("GET","uploadme1.php?varname="+p+"&varname2="+oldCount,false);
+xmlhttp1.onreadystatechange = function() {
+            if (xmlhttp1.readyState == 4 && xmlhttp1.status == 200) {
+                //document.getElementById("op").innerHTML = xmlhttp1.responseText;
+		//alert(xmlhttp1.responseText);
+				oldCount=p;
+            }
+        }
+xmlhttp1.send();
+}
+function Startt(){
+setInterval(function(){myTimer()},60000);
+}
+</script>
+</head>
+<body onload="Startt()">
+<p id="op"></p>
+</body>
+</html>
